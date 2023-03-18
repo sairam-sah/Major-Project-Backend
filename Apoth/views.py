@@ -20,3 +20,15 @@ def flower_list(request):
     return HttpResponse(Json_data)
 
 
+from django.db.models import Q
+
+def flower_detail(request):
+    query = request.GET.get('query')
+    if query:
+        results = Flower.objects.filter(Q(name__icontains=query))
+    else:
+        results = Flower.objects.all()
+    return render(request, 'search_results.html', {'results': results})
+
+
+

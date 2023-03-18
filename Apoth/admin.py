@@ -4,4 +4,4 @@ from.models import Flower
 # Register your models here.
 @admin.register(Flower)
 class FlowerAdmin(admin.ModelAdmin):
-    list_display = [ 'id','name', 'sname', 'property', 'location']
+    list_display = [ 'id','name', 'sname', 'property', 'location', 'photo']
