@@ -1,16 +1,21 @@
 from django.shortcuts import render
 from .models import Flower
 from .serializers import FlowerSerializer
+from rest_framework import generics
 from rest_framework.renderers import JSONOpenAPIRenderer
 from django.http import HttpResponse
-# Model Object -Single Flower Data
 
+
+# Model Object -Single Flower Data
 def flower_detail(request,pk):
     flo = Flower.objects.get(id=pk)
     serializer = FlowerSerializer(flo)
     Json_data = JSONOpenAPIRenderer().render(serializer.data)
     return HttpResponse(Json_data,content_type='application/json')
 
+class Flower_Lists(generics.ListAPIView):
+    queryset = Flower.objects.all()
+    serializer_class = FlowerSerializer
 
 # All Query set - All flower Data
 def flower_list(request):
@@ -22,7 +27,7 @@ def flower_list(request):
 
 from django.db.models import Q
 
-def flower_detail(request):
+def flower_details(request):
     query = request.GET.get('query')
     if query:
         results = Flower.objects.filter(Q(name__icontains=query))
