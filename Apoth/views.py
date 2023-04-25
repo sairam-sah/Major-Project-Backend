@@ -4,6 +4,7 @@ from .serializers import FlowerSerializer
 from rest_framework import generics
 from rest_framework.renderers import JSONOpenAPIRenderer
 from django.http import HttpResponse
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 # Model Object -Single Flower Data
@@ -16,6 +17,8 @@ def flower_detail(request,pk):
 class Flower_Lists(generics.ListAPIView):
     queryset = Flower.objects.all()
     serializer_class = FlowerSerializer
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('name', 'sname')
 
 # All Query set - All flower Data
 def flower_list(request):
